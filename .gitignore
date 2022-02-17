@@ -1,3 +1,7 @@
+# Enviroment variables
+config.env
+credentials.js
+
 # Logs
 logs
 *.log

@@ -1,35 +1,19 @@
 import React from "react";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-
+import "./LeftList.css";
 
 export default function LeftList() {
     return (
-        <List 
-        component="nav"
-        sx={{
-            fontSize: "1.2rem",
-        }}>
-            <div>
-            <ListItem>
-                <u>Card A</u>
-            </ListItem>
-            <ListItem>
-                Card B
-            </ListItem>
-            <ListItem>
-                Card C
-            </ListItem>
-            <ListItem>
-                Card D
-            </ListItem>
-            <ListItem>
-                Card E
-            </ListItem>
-            <ListItem>
-                Card F
-            </ListItem>
-            </div>
-        </List>
-    );
+        <div>
+            <ul>
+                <li> <a href="#"> Card A </a> </li>
+                <li> <a href="#"> Card B </a> </li>
+                <li> <a href="#"> Card C </a> </li>
+                <li> <a href="#"> Card D </a> </li>
+                <li> <a href="#"> Card E </a> </li>
+                <li> <a href="#"> Card F </a> </li>
+                <li> <a href="#"> Card G </a> </li>
+                <li> <a href="#"> Card H </a> </li>
+            </ul>
+        </div>
+);
 }

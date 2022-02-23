@@ -2,13 +2,15 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import bodyParser from 'body-parser';
+//import { dbModel } from './models/dbModel.js';
+
+
+ import { Users } from './models/Users.js';
+import { Deck } from './models/Deck.js';
 import 'dotenv/config'
-import { Users } from './models/Users.js';
-import { Deck } from './models/Deck.js'
 
 const app = express()
 const port = 8000
-
 // Connect to MongoDB
 const connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.bgjij.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 try {
@@ -49,7 +51,7 @@ app.get('/', (req, res) => {
 
 // ---------------- Get all users ----------------
 app.get('/users', async (req, res) => { 
-  const users = await Users.find();
+  const users = await dbModel.Users.find();
   res.json(users);
 });
 
@@ -244,6 +246,35 @@ app.post('/decks/:id/update', async (req, res) => {
 // ----------------------------------------
 // ------------- CARD ROUTES --------------
 // ----------------------------------------
+// ---------------- Delete a card ----------------
+app.delete('/delete_card/:id', async (req, res) => {
+  if (req.params.id === undefined) {
+      res.sendStatus(400);
+  } else {
+        var card = await Deck.findOne({
+          'cards._id': req.params.id
+        })
+        if (card === null) {
+            res.sendStatus(404);
+        }
+        else {
+          const newCards = card.cards.filter(card => card._id !== req.params.id)
+          card.cards = newCards
+
+          try {
+              await card.save();
+              res.status(200);
+              res.send("Card deleted");
+          }
+          catch (error) {
+              res.status(400);
+              res.send(error);
+          }
+      }
+    }
+});
+
+
 
 // ---------------- Get a card by ID ----------------
 app.get('/cards/:id', async (req, res) => {
@@ -272,6 +303,7 @@ app.get('/cards/:id', async (req, res) => {
 
 
 const isUrl = (value) => {
+  // eslint-disable-next-line no-useless-escape
   const re = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
   return re.test(value)
 }

@@ -2,10 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import bodyParser from 'body-parser';
-//import { dbModel } from './models/dbModel.js';
-
-
- import { Users } from './models/Users.js';
+import { Users } from './models/Users.js';
 import { Deck } from './models/Deck.js';
 import 'dotenv/config'
 
@@ -23,14 +20,11 @@ try {
   console.log("Cannot connect to the database!", err);
   process.exit();
 }
-
-
 /* // Middleware
 const exampleMiddleware = (req, res, next) => {
   console.log('example middleware')
   next()
 } */
-
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -40,10 +34,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // --------------------------------------------------------------------------------
 // ---------------- ROUTES --------------------------------------------------------
 // --------------------------------------------------------------------------------
-
-app.get('/', (req, res) => {
-  res.send('Hello, world!')
-})
 
 // ----------------------------------------
 // ------------- USER ROUTES --------------
@@ -87,7 +77,6 @@ app.get('/get_user/:id', async (req, res) => {
       }
   }
 });
-
 
 // ---------------- Update a user ----------------
 app.post('/update_user/:id', async (req, res) => {
@@ -214,8 +203,6 @@ app.post('/decks/create', async (req, res) => {
 
 // ---------------- Update a deck ----------------
 app.post('/decks/:id/update', async (req, res) => {
-  console.log(req.params.id)
-  console.log(req.body)
   if (req.params.id === undefined) {
       res.status(400);
       res.send('No id provided');
@@ -246,6 +233,7 @@ app.post('/decks/:id/update', async (req, res) => {
 // ----------------------------------------
 // ------------- CARD ROUTES --------------
 // ----------------------------------------
+
 // ---------------- Delete a card ----------------
 app.delete('/delete_card/:id', async (req, res) => {
   if (req.params.id === undefined) {
@@ -260,7 +248,6 @@ app.delete('/delete_card/:id', async (req, res) => {
         else {
           const newCards = card.cards.filter(card => card._id !== req.params.id)
           card.cards = newCards
-
           try {
               await card.save();
               res.status(200);
@@ -273,8 +260,6 @@ app.delete('/delete_card/:id', async (req, res) => {
       }
     }
 });
-
-
 
 // ---------------- Get a card by ID ----------------
 app.get('/cards/:id', async (req, res) => {
@@ -300,7 +285,6 @@ app.get('/cards/:id', async (req, res) => {
       }
     }
 });
-
 
 const isUrl = (value) => {
   // eslint-disable-next-line no-useless-escape
@@ -344,7 +328,6 @@ app.post('/cards', async (req, res) => {
     res.sendStatus(502)
   }
 })
-// Working
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)

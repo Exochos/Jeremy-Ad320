@@ -1,22 +1,8 @@
-/*    _ _  _ ___  ____ ____ ___ ____
-      | |\/| |__] |  | |__/  |  [__
-      | |  | |    |__| |  \  |  ___]    */
-
-import express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import mongoose from 'mongoose';
-
-
-
-
-//const bodyParser = require('body-parser');
-//const data = require('./models/dogs.js');
-      
-
 
 ReactDOM.render(
   <React.StrictMode>

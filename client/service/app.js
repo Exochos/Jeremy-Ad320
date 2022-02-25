@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // ---------------- Get all users ----------------
 app.get('/users', async (req, res) => { 
-  const users = await dbModel.Users.find();
+  const users = await Users.find();
   res.json(users);
 });
 
@@ -301,6 +301,7 @@ app.post('/cards', async (req, res) => {
     res.status(400).send('Card data incomplete')
   }
 
+  // eslint-disable-next-line no-undef
   if ((frontImage && !isUrl(frontImage)) || (backImage && !isUrl(backImage))) {
     res.status(400).send('Image fields must be valid URLs')
   }
